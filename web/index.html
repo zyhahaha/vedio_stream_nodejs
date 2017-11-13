@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul id="root">
+            <li>
+                <h2>test</h2>
+                <h5>
+                    <video src="./video/222.mp4" controls="controls">
+                        您的浏览器不支持 video 标签。
+                    </video>
+                </h5>
+            </li>
+            <li>
+                <h2>test1</h2>
+                <h5>
+                    <a href="###">url1</a>
+                </h5>
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="./filelist.js"></script>
+<script>
+    var appEl = document.getElementById('root');
+    var addendEl = null;
+    var test = null;
+    for(let key in json){
+        test = document.createElement('li');
+        test.innerHTML = '<h2>' + key + '</h2>';
+        appEl.appendChild(test);
+    }
+
+    function readJson(json){
+        for(let key in json){
+            console.log(key);
+            if(typeof json[key] === 'object') readJson(json[key]);
+        }
+    }
+
+    readJson(json);
+</script>
+</html>
