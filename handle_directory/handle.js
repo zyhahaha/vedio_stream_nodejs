@@ -10,6 +10,7 @@ fs.readdir(filePath, function (err, files) {
         console.log(err);
         return;
     }
+    let testArr = [];
     files.forEach(function (filename) {
         fs.stat(path.join(filePath, filename), function (err, stats) {
             if (err) throw err;
@@ -18,19 +19,21 @@ fs.readdir(filePath, function (err, files) {
                 console.log(filename);
             } else if (stats.isDirectory()) {
                 console.log(filename);
-                fileObj[filename] = {};
-                readFile(path.join(filePath, filename), filename, already);
+                readFile(path.join(filePath, filename), filename, testArr, already);
             }
         });
     });
 });
 
 //获取文件数组
-function readFile(readurl, name, next) {
+function readFile(readurl, name, testArr, next) {
     // console.log(name);
     let testObj = {
-        title: name
+        title: name,
+        urlList: [],
+        titleList: []
     };
+    testArr.push(testObj);
     fs.readdir(readurl, function (err, files) {
         if (err) { console.log(err); return; }
 
@@ -41,8 +44,9 @@ function readFile(readurl, name, next) {
                 //是文件
                 if (stats.isFile()) {
                     testObj.urlList.push(realFileName);
+                    writeFile(testArr);
                 } else if (stats.isDirectory()) {
-                    console.log(filename);
+                    // readFile(realFileName, filename, testObj, already);
                 }
             });
         });
