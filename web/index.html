@@ -5,45 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="./style/style.css"/>
 </head>
 <body>
     <div id="app">
-        <ul id="root">
-            <li>
-                <h2>test</h2>
-                <h5>
-                    <video src="./video/222.mp4" controls="controls">
-                        您的浏览器不支持 video 标签。
-                    </video>
-                </h5>
-            </li>
-            <li>
-                <h2>test1</h2>
-                <h5>
-                    <a href="###">url1</a>
-                </h5>
-            </li>
-        </ul>
+        <video id="video" src="./video/222.mp4" controls="controls">
+            您的浏览器不支持 video 标签。
+        </video>
+        <div id="root">
+            <ul>
+                <li id="click" onclick="videoClick()">click</li>
+            </ul>
+        </div>
     </div>
 </body>
-<script src="./filelist.js"></script>
+<script src="../handle_directory/filelist.js"></script>
 <script>
     var appEl = document.getElementById('root');
+    // console.log(json);
+    // let clickEl = document.getElementById('click');
+    // let videoEl = document.getElementById('video');
+
+    // function videoClick(){
+    //     alert(1234)
+    //     videoEl.setAttribute('src', '111.mp4')
+    // }
+
     var addendEl = null;
     var test = null;
     for(let key in json){
-        test = document.createElement('li');
-        test.innerHTML = '<h2>' + key + '</h2>';
+        rootJson = json[key];
+        test = document.createElement('ul');
+        innerHTMLStr = '<h2>' + rootJson.title + '</h2>'
+        for(let key2 in rootJson.urlList){
+            innerHTMLStr += '<li data-url=' + rootJson.urlList[key2].url + '>' + rootJson.urlList[key2].name + '</li>'
+        }
+        test.innerHTML = innerHTMLStr;
         appEl.appendChild(test);
     }
 
-    function readJson(json){
-        for(let key in json){
-            console.log(key);
-            if(typeof json[key] === 'object') readJson(json[key]);
-        }
-    }
+    // function readJson(json){
+    //     for(let key in json){
+    //         console.log(key);
+    //         if(typeof json[key] === 'object') readJson(json[key]);
+    //     }
+    // }
 
-    readJson(json);
+    // readJson(json);
 </script>
 </html>
