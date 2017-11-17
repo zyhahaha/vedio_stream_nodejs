@@ -6,8 +6,10 @@
         {
             title: "一",
             urlList: [
-                "1.ttt",
-                "2.ttt"
+                {
+                    name: "1.ttt",
+                    url: "xxx/xxx/1.ttt"
+                }
             ],
             titleList: [
                 {
