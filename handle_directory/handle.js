@@ -5,12 +5,13 @@ var filePath = path.resolve() + '/assets';
 var fileArr = [];
 var fileObj = {};
 
+let rootArr = [];
+
 fs.readdir(filePath, function (err, files) {
     if (err) {
         console.log(err);
         return;
     }
-    let testArr = [];
     files.forEach(function (filename) {
         fs.stat(path.join(filePath, filename), function (err, stats) {
             if (err) throw err;
@@ -19,7 +20,7 @@ fs.readdir(filePath, function (err, files) {
                 console.log(filename);
             } else if (stats.isDirectory()) {
                 console.log(filename);
-                readFile(path.join(filePath, filename), filename, testArr, already);
+                readFile(path.join(filePath, filename), filename, rootArr, already);
             }
         });
     });
@@ -44,9 +45,9 @@ function readFile(readurl, name, testArr, next) {
                 //是文件
                 if (stats.isFile()) {
                     testObj.urlList.push(realFileName);
-                    writeFile(testArr);
+                    writeFile(rootArr);
                 } else if (stats.isDirectory()) {
-                    // readFile(realFileName, filename, testObj, already);
+                    readFile(realFileName, filename, testObj.titleList, already);
                 }
             });
         });
