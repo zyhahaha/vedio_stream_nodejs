@@ -38,10 +38,16 @@
         test = document.createElement('ul');
         innerHTMLStr = '<h2>' + rootJson.title + '</h2>'
         for(let key2 in rootJson.urlList){
-            innerHTMLStr += '<li data-url=' + rootJson.urlList[key2].url + '>' + rootJson.urlList[key2].name + '</li>'
+            innerHTMLStr += '<li class="changeUrl" onclick="changeUrl()" data-url=' + rootJson.urlList[key2].url + '>' + rootJson.urlList[key2].name + '</li>'
         }
         test.innerHTML = innerHTMLStr;
         appEl.appendChild(test);
+    }
+
+    let urlLiEl = document.getElementsByClassName('changeUrl');
+
+    function changeUrl(){
+        
     }
 
     // function readJson(json){
