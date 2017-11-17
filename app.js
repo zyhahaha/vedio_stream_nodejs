@@ -1,22 +1,18 @@
-/**
- * Created by nodefx on 8/29/14.
- */
-
 var path = require('path');
 var fs = require('fs')
 var http = require('http')
 var url = require('url')
-var mime = require('./mime').types
-var config = require("./config");
+var mime = require('./handle_video/mime').types
+var config = require("./handle_video/config");
 var zlib = require("zlib")
-var utils = require("./utils")
+var utils = require("./handle_video/utils")
 
 var port = 3003;
 
 var server = http.createServer(function(request, response){
 
     var pathname = url.parse(request.url).pathname;
-    var realpath = path.join("assets", path.normalize(pathname.replace(/\.\./g, "")))
+    var realpath = path.join("web", path.normalize(pathname.replace(/\.\./g, "")))
     console.log(realpath)
     var ext = path.extname(realpath)
     ext = ext ? ext.slice(1):"unknown"
