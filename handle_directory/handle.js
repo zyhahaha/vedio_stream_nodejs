@@ -44,7 +44,11 @@ function readFile(readurl, name, testArr, next) {
                 if (err) throw err;
                 //是文件
                 if (stats.isFile()) {
-                    testObj.urlList.push(realFileName);
+                    let urlJson = {
+                        name: filename,
+                        url: realFileName
+                    }
+                    testObj.urlList.push(urlJson);
                     writeFile(rootArr);
                 } else if (stats.isDirectory()) {
                     readFile(realFileName, filename, testObj.titleList, already);
