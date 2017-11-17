@@ -1,13 +1,9 @@
 var fs = require("fs");
 var path = require("path");
 var rootPath = path.resolve();
-var filePath = path.resolve() + '/dir';
+var filePath = path.resolve() + '/assets';
 var fileArr = [];
 var fileObj = {};
-
-function already(){
-    console.log(fileObj);
-}
 
 fs.readdir(filePath, function (err, files) {
     if (err) {
@@ -29,28 +25,22 @@ fs.readdir(filePath, function (err, files) {
     });
 });
 
-
-//获取后缀名
-function getdir(url) {
-    var arr = url.split('.');
-    var len = arr.length;
-    return arr[len - 1];
-}
-
 //获取文件数组
 function readFile(readurl, name, next) {
     // console.log(name);
+    let testObj = {
+        title: name
+    };
     fs.readdir(readurl, function (err, files) {
         if (err) { console.log(err); return; }
 
         files.forEach(function (filename) {
-            fs.stat(path.join(readurl, filename), function (err, stats) {
+            let realFileName = path.join(readurl, filename);
+            fs.stat(realFileName, function (err, stats) {
                 if (err) throw err;
                 //是文件
                 if (stats.isFile()) {
-                    console.log(filename);
-                    fileObj[name][filename] = filename;
-                    writeFile(fileObj);
+                    testObj.urlList.push(realFileName);
                 } else if (stats.isDirectory()) {
                     console.log(filename);
                 }
@@ -59,6 +49,11 @@ function readFile(readurl, name, next) {
     });
 }
 
+// already
+
+function already(){
+    console.log(fileObj);
+}
 
 // 写入到filelisttxt文件
 function writeFile(data) {
@@ -68,4 +63,11 @@ function writeFile(data) {
         if (err) throw err;
         console.log("写入成功");
     });
+}
+
+//获取后缀名
+function getdir(url) {
+    var arr = url.split('.');
+    var len = arr.length;
+    return arr[len - 1];
 }
