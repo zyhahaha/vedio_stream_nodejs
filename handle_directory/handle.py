@@ -2,20 +2,21 @@
 # >>> [x for x in os.listdir('.') if os.path.isdir(x)]
 
 import os
+import json
 
 pathList = []
 
 def readDir(childList, pathName, dirName):
     pathDict = {
-        'name': dirName,
+        'title': dirName,
         'urlList': [],
-        'childList': []
+        'titleList': []
     }
     childList.append(pathDict)
     if os.path.isdir(pathName):
         # is 目录
         for x in os.listdir(pathName):
-            readDir(pathDict['childList'], os.path.join(pathName, x), x)
+            readDir(pathDict['titleList'], os.path.join(pathName, x), x)
     if os.path.isfile(pathName):
         # is 文件
         urlDict = {
@@ -28,9 +29,19 @@ def writeFile(data):
     with open('./pathlist.py', 'w') as f:
     	f.write(data)
 
-for x in os.listdir('.'):
-    readDir(pathList, x, x)
+# for x in os.listdir('.'):
+#     readDir(pathList, x, x)
 
-print(pathList)
+readDir(pathList, 'assets', 'assets')
+
+# wObj = {
+#     'json': pathList
+# }
+print(pathList[0])
+pathList = pathList[0]['titleList']
+
+pathList = json.dumps(pathList, ensure_ascii=False)
+
+# print(pathList)
 
 writeFile(str(pathList))
