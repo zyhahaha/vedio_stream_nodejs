@@ -21,42 +21,27 @@
 </body>
 <script src="../handle_directory/filelist.js"></script>
 <script>
-    var appEl = document.getElementById('root');
-    // console.log(json);
-    // let clickEl = document.getElementById('click');
-    // let videoEl = document.getElementById('video');
+    let rootEl = document.getElementById('root');
+    let urlLiEl = document.getElementsByClassName('changeUrl');
+    let videoEl = document.getElementById('video');
 
-    // function videoClick(){
-    //     alert(1234)
-    //     videoEl.setAttribute('src', '111.mp4')
-    // }
-
-    var addendEl = null;
-    var test = null;
+    let ulEl = null;
     for(let key in json){
         rootJson = json[key];
-        test = document.createElement('ul');
+        ulEl = document.createElement('ul');
         innerHTMLStr = '<h2>' + rootJson.title + '</h2>'
         for(let key2 in rootJson.urlList){
-            innerHTMLStr += '<li class="changeUrl" onclick="changeUrl()" data-url=' + rootJson.urlList[key2].url + '>' + rootJson.urlList[key2].name + '</li>'
+            innerHTMLStr += '<li class="changeUrl" onclick="changeUrl(this)">' + rootJson.urlList[key2].name + '<span>' + rootJson.urlList[key2].url + '</span></li>'
         }
-        test.innerHTML = innerHTMLStr;
-        appEl.appendChild(test);
+        ulEl.innerHTML = innerHTMLStr;
+        rootEl.appendChild(ulEl);
     }
 
-    let urlLiEl = document.getElementsByClassName('changeUrl');
-
-    function changeUrl(){
-        
+    function changeUrl(e){
+        let src = e.querySelector('span').innerHTML;
+        // console.log(e.querySelector('span').innerHTML);
+        videoEl.setAttribute('src', src);
     }
 
-    // function readJson(json){
-    //     for(let key in json){
-    //         console.log(key);
-    //         if(typeof json[key] === 'object') readJson(json[key]);
-    //     }
-    // }
-
-    // readJson(json);
 </script>
 </html>
