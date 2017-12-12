@@ -26,7 +26,7 @@ def readDir(childList, pathName, dirName):
         pathDict['urlList'].append(urlDict)
 
 def writeFile(data):
-    with open('./pathlist.py', 'w') as f:
+    with open('./pathlist.js', 'w') as f:
     	f.write(data)
 
 # for x in os.listdir('.'):
@@ -37,7 +37,7 @@ readDir(pathList, 'assets', 'assets')
 # wObj = {
 #     'json': pathList
 # }
-print(pathList[0])
+print(pathList)
 pathList = pathList[0]['titleList']
 
 pathList = json.dumps(pathList, ensure_ascii=False)

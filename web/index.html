@@ -18,27 +18,56 @@
         <div id="ball" onclick="backTop()">Top</div>
     </div>
 </body>
-<script src="../handle_directory/filelist.js"></script>
+<script src="../handle_directory/pathlist.js"></script>
 <script>
     let rootEl = document.getElementById('root');
     let videoEl = document.getElementById('video');
+    console.log(json);
+    readJson(json, rootEl);
 
     // let ulEl = null;
-    for(let key in json){
-        let rootJson = json[key];
-        let ulEl = document.createElement('ul');
-        let innerHTMLStr = '';
-        let titleEl = document.createElement('h2');
-        titleEl.setAttribute('onclick', 'fold(this)');
-        titleEl.innerHTML = rootJson.title;
-        rootEl.appendChild(titleEl);
-        for(let key2 in rootJson.urlList){
-            innerHTMLStr += '<li onclick="changeUrl(this)">' + rootJson.urlList[key2].name
-                          +     '<span style="display: none">' + rootJson.urlList[key2].url + '</span>'
-                          + '</li>';
+    // for(let key in json){
+    //     let rootJson = json[key];
+    //     let ulEl = document.createElement('ul');
+    //     let innerHTMLStr = '';
+
+    //     let titleEl = document.createElement('h2');
+    //     titleEl.setAttribute('onclick', 'fold(this)');
+    //     titleEl.innerHTML = rootJson.title;
+    //     rootEl.appendChild(titleEl);
+
+    //     for(let key2 in rootJson.urlList){
+    //         innerHTMLStr += '<li onclick="changeUrl(this)">' + rootJson.urlList[key2].name
+    //                       +     '<span style="display: none">' + rootJson.urlList[key2].url + '</span>'
+    //                       + '</li>';
+    //     }
+    //     ulEl.innerHTML = innerHTMLStr;
+    //     rootEl.appendChild(ulEl);
+    // }
+
+
+    function readJson(json, rootEl){
+        for(let key in json){
+            let fileJson = json[key];
+            if(fileJson.titleList.length) return readJson(fileJson.titleList, rootEl); // 是文件夹，回调继续展开
+
+            let ulEl = document.createElement('ul');
+            let innerHTMLStr = '';
+
+            let titleEl = document.createElement('h2');
+            titleEl.setAttribute('onclick', 'fold(this)');
+            titleEl.innerHTML = fileJson.title;
+            rootEl.appendChild(titleEl);
+
+            for(let key2 in fileJson.urlList){
+                innerHTMLStr += '<li onclick="changeUrl(this)">' + fileJson.urlList[key2].name
+                              +     '<span style="display: none">' + fileJson.urlList[key2].url + '</span>'
+                              + '</li>';
+            }
+            ulEl.innerHTML = innerHTMLStr;
+            rootEl.appendChild(ulEl);
+            // let rRootEl = ulEl;
         }
-        ulEl.innerHTML = innerHTMLStr;
-        rootEl.appendChild(ulEl);
     }
 
     function changeUrl(e){
