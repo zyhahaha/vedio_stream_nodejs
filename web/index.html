@@ -13,34 +13,57 @@
             您的浏览器不支持 video 标签。
         </video>
         <div id="root">
-            <ul>
-                <li id="click" onclick="videoClick()">click</li>
-            </ul>
+            <h2 onclick="allFold()">全部折叠</h2>
         </div>
+        <div id="ball" onclick="backTop()">Top</div>
     </div>
 </body>
 <script src="../handle_directory/filelist.js"></script>
 <script>
     let rootEl = document.getElementById('root');
-    let urlLiEl = document.getElementsByClassName('changeUrl');
     let videoEl = document.getElementById('video');
 
-    let ulEl = null;
+    // let ulEl = null;
     for(let key in json){
-        rootJson = json[key];
-        ulEl = document.createElement('ul');
-        innerHTMLStr = '<h2>' + rootJson.title + '</h2>'
+        let rootJson = json[key];
+        let ulEl = document.createElement('ul');
+        let innerHTMLStr = '';
+        let titleEl = document.createElement('h2');
+        titleEl.setAttribute('onclick', 'fold(this)');
+        titleEl.innerHTML = rootJson.title;
+        rootEl.appendChild(titleEl);
         for(let key2 in rootJson.urlList){
-            innerHTMLStr += '<li class="changeUrl" onclick="changeUrl(this)">' + rootJson.urlList[key2].name + '<span>' + rootJson.urlList[key2].url + '</span></li>'
+            innerHTMLStr += '<li onclick="changeUrl(this)">' + rootJson.urlList[key2].name
+                          +     '<span style="display: none">' + rootJson.urlList[key2].url + '</span>'
+                          + '</li>';
         }
         ulEl.innerHTML = innerHTMLStr;
         rootEl.appendChild(ulEl);
     }
 
     function changeUrl(e){
+        backTop();
         let src = e.querySelector('span').innerHTML;
         // console.log(e.querySelector('span').innerHTML);
         videoEl.setAttribute('src', src);
+    }
+
+    function fold(e){
+        let el = e.nextSibling;
+        let elDisplay = getComputedStyle(el).display;
+        el.style.display = elDisplay === 'none' ? 'block' : 'none';
+    }
+
+    function allFold(){
+        let elArr = document.querySelectorAll('#root ul');
+        for (let i = 0; i < elArr.length; i ++){
+            elArr[i].style.display = 'none';
+        }
+    }
+
+    function backTop(){
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
     }
 
 </script>

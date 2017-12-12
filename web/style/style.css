@@ -1,3 +1,50 @@
-#app{
-    color: red
+/* reset */
+h2{
+	margin: 5px;
 }
+ul{
+	margin: 0px;
+	padding: 0px;
+}
+li{
+	list-style: none;
+}
+
+/* style */
+
+#video{
+	width: 100%;
+}
+
+#root{
+	text-align: center;
+}
+
+#root h2, #root ul li{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+#root h2{
+	border-radius: 5px;
+	background-color: #ccc;
+}
+
+#root li{
+	padding: 20px;
+}
+
+/* ball */
+#ball{
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	text-align: center;
+	line-height: 50px;
+	background-color: #ccc;
+}
+
