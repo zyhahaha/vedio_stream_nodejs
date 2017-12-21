@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="shortcut icon" href="favicon.ico" />
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="./style/style.css"/>
 </head>
@@ -18,62 +22,42 @@
         <div id="ball" onclick="backTop()">Top</div>
     </div>
 </body>
-<script src="../handle_directory/pathlist.js"></script>
-<script>
+<script type="text/javascript" src="../handle_directory/pathlist.js" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
     let rootEl = document.getElementById('root');
     let videoEl = document.getElementById('video');
     console.log(json);
     readJson(json, rootEl);
 
-    // let ulEl = null;
-    // for(let key in json){
-    //     let rootJson = json[key];
-    //     let ulEl = document.createElement('ul');
-    //     let innerHTMLStr = '';
-
-    //     let titleEl = document.createElement('h2');
-    //     titleEl.setAttribute('onclick', 'fold(this)');
-    //     titleEl.innerHTML = rootJson.title;
-    //     rootEl.appendChild(titleEl);
-
-    //     for(let key2 in rootJson.urlList){
-    //         innerHTMLStr += '<li onclick="changeUrl(this)">' + rootJson.urlList[key2].name
-    //                       +     '<span style="display: none">' + rootJson.urlList[key2].url + '</span>'
-    //                       + '</li>';
-    //     }
-    //     ulEl.innerHTML = innerHTMLStr;
-    //     rootEl.appendChild(ulEl);
-    // }
-
-
-    function readJson(json, rootEl){
+    function readJson(json, el){
         for(let key in json){
             let fileJson = json[key];
-            if(fileJson.titleList.length) return readJson(fileJson.titleList, rootEl); // 是文件夹，回调继续展开
-
             let ulEl = document.createElement('ul');
+            if(fileJson.titleList.length){
+                let titleEl = document.createElement('h2');
+                titleEl.setAttribute('onclick', 'fold(this)');
+                titleEl.innerHTML = fileJson.title;
+                el.appendChild(titleEl);
+                el.appendChild(ulEl);
+                readJson(fileJson.titleList, ulEl); // 是文件夹，回调继续展开
+                continue;
+            }
+
+            // 是文件，写入
             let innerHTMLStr = '';
-
-            let titleEl = document.createElement('h2');
-            titleEl.setAttribute('onclick', 'fold(this)');
-            titleEl.innerHTML = fileJson.title;
-            rootEl.appendChild(titleEl);
-
             for(let key2 in fileJson.urlList){
                 innerHTMLStr += '<li onclick="changeUrl(this)">' + fileJson.urlList[key2].name
                               +     '<span style="display: none">' + fileJson.urlList[key2].url + '</span>'
                               + '</li>';
             }
             ulEl.innerHTML = innerHTMLStr;
-            rootEl.appendChild(ulEl);
-            // let rRootEl = ulEl;
+            el.appendChild(ulEl);
         }
     }
 
     function changeUrl(e){
         backTop();
         let src = e.querySelector('span').innerHTML;
-        // console.log(e.querySelector('span').innerHTML);
         videoEl.setAttribute('src', src);
     }
 

@@ -1,3 +1,5 @@
+#coding:utf-8
+
 # >>> [x for x in os.listdir('.') if os.path.isfile(x) and os.path.splitext(x)[1]=='.py']
 # >>> [x for x in os.listdir('.') if os.path.isdir(x)]
 
@@ -26,7 +28,7 @@ def readDir(childList, pathName, dirName):
         pathDict['urlList'].append(urlDict)
 
 def writeFile(data):
-    with open('./pathlist.js', 'w') as f:
+    with open('./pathlist.js', 'w', encoding='utf8') as f:
     	f.write(data)
 
 # for x in os.listdir('.'):
