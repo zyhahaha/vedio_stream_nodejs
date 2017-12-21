@@ -32,8 +32,8 @@
     function readJson(json, el){
         for(let key in json){
             let fileJson = json[key];
-            let ulEl = document.createElement('ul');
             if(fileJson.titleList.length){
+                let ulEl = document.createElement('ul');
                 let titleEl = document.createElement('h2');
                 titleEl.setAttribute('onclick', 'fold(this)');
                 titleEl.innerHTML = fileJson.title;
@@ -44,14 +44,15 @@
             }
 
             // 是文件，写入
+            let divEl = document.createElement('div');
             let innerHTMLStr = '';
             for(let key2 in fileJson.urlList){
                 innerHTMLStr += '<li onclick="changeUrl(this)">' + fileJson.urlList[key2].name
                               +     '<span style="display: none">' + fileJson.urlList[key2].url + '</span>'
                               + '</li>';
             }
-            ulEl.innerHTML = innerHTMLStr;
-            el.appendChild(ulEl);
+            divEl.innerHTML = innerHTMLStr;
+            el.appendChild(divEl);
         }
     }
 
