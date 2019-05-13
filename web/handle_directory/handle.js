@@ -1,7 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 var rootPath = path.resolve();
-var filePath = path.resolve() + '/assets';
+var filePath = path.resolve() + '/../avideo';
 var fileArr = [];
 var fileObj = {};
 
