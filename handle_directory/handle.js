@@ -47,9 +47,11 @@ function readFile(readurl, name, testArr, next) {
         if (err) throw err;
         //是文件
         if (stats.isFile()) {
+          let reg = /.+vedio_stream_nodejs\\web\\/;
+          let urlName = realFileName.replace(reg, './');
           let urlJson = {
             name: filename,
-            url: realFileName
+            url: urlName
           };
           testObj.urlList.push(urlJson);
           writeFile(rootArr);
