@@ -7,24 +7,25 @@ var fileObj = {};
 
 let rootArr = [];
 
-fs.readdir(filePath, function(err, files) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  files.forEach(function(filename) {
-    fs.stat(path.join(filePath, filename), function(err, stats) {
-      if (err) throw err;
-      //文件
-      if (stats.isFile()) {
-        console.log(filename);
-      } else if (stats.isDirectory()) {
-        console.log(filename);
-        readFile(path.join(filePath, filename), filename, rootArr, already);
-      }
+function run(){
+  fs.readdir(filePath, function(err, files) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    files.forEach(function(filename) {
+      fs.stat(path.join(filePath, filename), function(err, stats) {
+        if (err) throw err;
+        //文件
+        if (stats.isFile()) {
+        } else if (stats.isDirectory()) {
+          readFile(path.join(filePath, filename), filename, rootArr, already);
+        }
+      });
     });
   });
-});
+}
+
 
 //获取文件数组
 function readFile(readurl, name, testArr, next) {
@@ -66,7 +67,7 @@ function readFile(readurl, name, testArr, next) {
 // already
 
 function already() {
-  console.log(fileObj);
+  console.log('already');
 }
 
 // 写入到filelisttxt文件
@@ -85,3 +86,6 @@ function getdir(url) {
   var len = arr.length;
   return arr[len - 1];
 }
+
+
+run();
